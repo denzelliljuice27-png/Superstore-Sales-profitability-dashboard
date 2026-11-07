@@ -56,16 +56,8 @@ The dataset is included in `data/Sample - Superstore.csv` for reproducibility. T
 
 ## Run the dashboard locally
 
-### 1. Clone the repository
 
-```bash
-git clone https://github.com/YOUR-USERNAME/superstore-sales-profitability-dashboard.git
-cd superstore-sales-profitability-dashboard
-```
-
-Replace `YOUR-USERNAME` with your GitHub username.
-
-### 2. Create and activate a virtual environment
+### Create and activate a virtual environment
 
 **Windows (PowerShell):**
 
@@ -81,14 +73,14 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Install dependencies
+### Install dependencies
 
 ```bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Start the dashboard
+### Start the dashboard
 
 ```bash
 python app.py
