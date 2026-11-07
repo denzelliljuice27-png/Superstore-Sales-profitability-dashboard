@@ -6,7 +6,7 @@ An end-to-end **Data Manipulation and Visualisation** project using the Sample S
 
 ## Dashboard preview
 
-![Dashboard overview](screenshots/dashboard-overview.png)
+![Dashboard overview](screenshots/dashboard-overview.PNG)
 
 ### More dashboard views
 
