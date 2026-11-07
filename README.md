@@ -171,6 +171,6 @@ This repository presents the practical work and learning from the Data Manipulat
 ## Author
 
 **BSc Information Technology student**  
-GitHub: [YOUR-GITHUB-USERNAME](https://github.com/YOUR-GITHUB-USERNAME)
+GitHub: [https://github.com/denzelliljuice27-png](https://github.com/denzelliljuice27-png)
 
 If you found this project useful, feel free to star the repository or connect with me on GitHub.
