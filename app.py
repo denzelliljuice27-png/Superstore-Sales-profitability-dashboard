@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 from dash import Dash, html, dcc, Input, Output
 import dash_bootstrap_components as dbc
 
@@ -24,10 +25,23 @@ if not DATA_PATH.exists():
     )
 
 df = pd.read_csv(DATA_PATH, encoding="latin1")
+
+REQUIRED_COLUMNS = {
+    "Order Date", "Ship Date", "Region", "Category", "Segment",
+    "Sales", "Profit", "Quantity", "Order ID", "Product Name",
+    "Sub-Category", "Discount",
+}
+missing_columns = REQUIRED_COLUMNS.difference(df.columns)
+if missing_columns:
+    raise ValueError(
+        "The dataset is missing required columns: "
+        + ", ".join(sorted(missing_columns))
+    )
+
+# Convert date columns and create fields used by the dashboard.
 df["Order Date"] = pd.to_datetime(df["Order Date"], errors="coerce")
 df["Ship Date"] = pd.to_datetime(df["Ship Date"], errors="coerce")
 df["Shipping_Days"] = (df["Ship Date"] - df["Order Date"]).dt.days
-df["Profit_Margin"] = (df["Profit"] / df["Sales"].replace(0, pd.NA)) * 100
 df["YearMonth"] = df["Order Date"].dt.to_period("M").astype(str)
 
 REGIONS = sorted(df["Region"].dropna().unique())
@@ -39,6 +53,7 @@ SEGMENTS = sorted(df["Segment"].dropna().unique())
 # Static visualisations (created once when the app starts)
 # ---------------------------------------------------------------------
 def figure_to_base64(fig):
+    """Convert a Matplotlib figure to an embedded PNG image."""
     buffer = BytesIO()
     fig.savefig(buffer, format="png", bbox_inches="tight", dpi=140)
     buffer.seek(0)
@@ -62,19 +77,33 @@ def create_subcategory_chart():
         .mean()
         .sort_values()
     )
-    bar_colors = ["#dc3545" if value < 0 else "#198754" for value in average_profit]
+    bar_colors = [
+        "#dc3545" if value < 0 else "#198754"
+        for value in average_profit
+    ]
 
     fig, ax = plt.subplots(figsize=(9, 6))
     average_profit.plot(kind="barh", color=bar_colors, ax=ax)
     ax.axvline(0, color="black", linewidth=0.8)
-    ax.set(title="Average Profit by Sub-Category", xlabel="Average Profit", ylabel="")
+    ax.set(
+        title="Average Profit by Sub-Category",
+        xlabel="Average Profit",
+        ylabel="",
+    )
     return figure_to_base64(fig)
 
 
 def create_correlation_heatmap():
     correlation = df[["Sales", "Quantity", "Discount", "Profit"]].corr()
     fig, ax = plt.subplots(figsize=(6, 5))
-    sns.heatmap(correlation, annot=True, cmap="coolwarm", center=0, fmt=".2f", ax=ax)
+    sns.heatmap(
+        correlation,
+        annot=True,
+        cmap="coolwarm",
+        center=0,
+        fmt=".2f",
+        ax=ax,
+    )
     ax.set_title("Correlation Heatmap")
     return figure_to_base64(fig)
 
@@ -142,7 +171,10 @@ app.layout = dbc.Container(
                             id="segment_filter",
                             options=[{"label": s, "value": s} for s in SEGMENTS],
                             value=SEGMENTS[0] if SEGMENTS else None,
-                            labelStyle={"display": "block", "marginBottom": "8px"},
+                            labelStyle={
+                                "display": "block",
+                                "marginBottom": "8px",
+                            },
                         ),
                     ],
                     md=4,
@@ -153,10 +185,41 @@ app.layout = dbc.Container(
         html.Br(),
         dbc.Row(
             [
-                dbc.Col(dbc.Card(dbc.CardBody([html.H5("Total Sales"), html.H2(id="sales_kpi")])) , md=3),
-                dbc.Col(dbc.Card(dbc.CardBody([html.H5("Total Profit"), html.H2(id="profit_kpi")])) , md=3),
-                dbc.Col(dbc.Card(dbc.CardBody([html.H5("Average Profit Margin"), html.H2(id="margin_kpi")])) , md=3),
-                dbc.Col(dbc.Card(dbc.CardBody([html.H5("Orders"), html.H2(id="orders_kpi")])) , md=3),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [html.H5("Total Sales"), html.H2(id="sales_kpi")]
+                        )
+                    ),
+                    md=3,
+                ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [html.H5("Total Profit"), html.H2(id="profit_kpi")]
+                        )
+                    ),
+                    md=3,
+                ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.H5("Profit Margin"),
+                                html.H2(id="margin_kpi"),
+                            ]
+                        )
+                    ),
+                    md=3,
+                ),
+                dbc.Col(
+                    dbc.Card(
+                        dbc.CardBody(
+                            [html.H5("Orders"), html.H2(id="orders_kpi")]
+                        )
+                    ),
+                    md=3,
+                ),
             ],
             className="g-3 mb-4",
         ),
@@ -165,6 +228,11 @@ app.layout = dbc.Container(
         dbc.Row(dbc.Col(dcc.Graph(id="regional_chart"))),
         html.Hr(),
         html.H3("Additional Analysis", className="mb-3"),
+        html.P(
+            "These three summary charts describe the full dataset and do not "
+            "change when the filters above are adjusted.",
+            className="text-muted",
+        ),
         dbc.Row(
             [
                 dbc.Col(
@@ -174,7 +242,9 @@ app.layout = dbc.Container(
                             src=f"data:image/png;base64,{profit_image}",
                             className="img-fluid",
                         ),
-                        html.P("Shows the spread of transaction profit values."),
+                        html.P(
+                            "Shows the spread of transaction profit values."
+                        ),
                     ],
                     md=4,
                 ),
@@ -185,7 +255,9 @@ app.layout = dbc.Container(
                             src=f"data:image/png;base64,{subcategory_image}",
                             className="img-fluid",
                         ),
-                        html.P("Negative average-profit values are shown in red."),
+                        html.P(
+                            "Negative average-profit values are shown in red."
+                        ),
                     ],
                     md=4,
                 ),
@@ -196,7 +268,10 @@ app.layout = dbc.Container(
                             src=f"data:image/png;base64,{heatmap_image}",
                             className="img-fluid",
                         ),
-                        html.P("Summarises linear relationships between numeric variables."),
+                        html.P(
+                            "Summarises linear relationships between "
+                            "numeric variables."
+                        ),
                     ],
                     md=4,
                 ),
@@ -213,7 +288,7 @@ app.layout = dbc.Container(
 
 
 # ---------------------------------------------------------------------
-# Callback: filter the data and refresh KPIs and interactive charts
+# Callback: filter data and refresh KPIs and interactive charts
 # ---------------------------------------------------------------------
 @app.callback(
     [
@@ -243,24 +318,51 @@ def update_dashboard(selected_regions, selected_categories, selected_segment):
 
     if filtered.empty:
         empty_fig = go.Figure()
-        empty_fig.update_layout(title="No data matches the selected filters")
+        empty_fig.update_layout(
+            title="No data matches the selected filters",
+            template="plotly_white",
+        )
         return "—", "—", "—", "0", empty_fig, empty_fig, empty_fig
 
     total_sales = filtered["Sales"].sum()
     total_profit = filtered["Profit"].sum()
-    average_margin = filtered["Profit_Margin"].mean()
+
+    # Overall profit margin is calculated from the filtered totals.
+    # This avoids giving small and large transactions equal weight.
+    profit_margin = (
+        (total_profit / total_sales) * 100
+        if total_sales != 0
+        else None
+    )
     order_count = filtered["Order ID"].nunique()
 
     scatter_fig = px.scatter(
         filtered,
         x="Sales",
         y="Profit",
-        color="Segment",
+        color="Region",
         size="Quantity",
-        hover_data=["Product Name", "Category", "Sub-Category", "Discount", "Region"],
+        hover_data=[
+            "Product Name",
+            "Category",
+            "Sub-Category",
+            "Discount",
+            "Segment",
+        ],
         title="Sales vs Profit",
+        template="plotly_white",
     )
-    scatter_fig.add_hline(y=0, line_dash="dash", line_color="red")
+    scatter_fig.add_hline(
+        y=0,
+        line_dash="dash",
+        line_color="red",
+        annotation_text="Break-even",
+    )
+    scatter_fig.update_layout(
+        xaxis_title="Sales ($)",
+        yaxis_title="Profit ($)",
+        legend_title="Region",
+    )
 
     monthly = (
         filtered.groupby("YearMonth", as_index=False)["Sales"]
@@ -273,27 +375,64 @@ def update_dashboard(selected_regions, selected_categories, selected_segment):
         y="Sales",
         title="Monthly Sales Trend",
         markers=True,
+        template="plotly_white",
     )
-    time_fig.update_layout(xaxis_rangeslider_visible=True)
+    time_fig.update_layout(
+        xaxis_title="Year and Month",
+        yaxis_title="Sales ($)",
+        xaxis_rangeslider_visible=True,
+    )
 
     regional = (
         filtered.groupby("Region", as_index=False)[["Sales", "Profit"]]
         .sum()
     )
-    regional_fig = go.Figure()
-    regional_fig.add_trace(go.Bar(x=regional["Region"], y=regional["Sales"], name="Sales"))
-    regional_fig.add_trace(go.Bar(x=regional["Region"], y=regional["Profit"], name="Profit"))
+
+    # Sales and profit have very different scales. Separate y-axes make
+    # both measures readable without hiding the smaller profit values.
+    regional_fig = make_subplots(specs=[[{"secondary_y": True}]])
+    regional_fig.add_trace(
+        go.Bar(
+            x=regional["Region"],
+            y=regional["Sales"],
+            name="Sales",
+            marker_color="#636EFA",
+            hovertemplate="%{x}<br>Sales: $%{y:,.2f}<extra></extra>",
+        ),
+        secondary_y=False,
+    )
+    regional_fig.add_trace(
+        go.Scatter(
+            x=regional["Region"],
+            y=regional["Profit"],
+            name="Profit",
+            mode="lines+markers",
+            line={"color": "#EF553B", "width": 3},
+            marker={"size": 9},
+            hovertemplate="%{x}<br>Profit: $%{y:,.2f}<extra></extra>",
+        ),
+        secondary_y=True,
+    )
     regional_fig.update_layout(
-        barmode="group",
-        title="Regional Performance",
-        xaxis_title="Region",
-        yaxis_title="Amount",
+        title="Regional Sales and Profit",
+        template="plotly_white",
+        legend_title="Measure",
+        hovermode="x unified",
+    )
+    regional_fig.update_xaxes(title_text="Region")
+    regional_fig.update_yaxes(
+        title_text="Sales ($)",
+        secondary_y=False,
+    )
+    regional_fig.update_yaxes(
+        title_text="Profit ($)",
+        secondary_y=True,
     )
 
     return (
         f"${total_sales:,.2f}",
         f"${total_profit:,.2f}",
-        f"{average_margin:.2f}%" if pd.notna(average_margin) else "—",
+        f"{profit_margin:.2f}%" if profit_margin is not None else "—",
         f"{order_count:,}",
         scatter_fig,
         time_fig,
@@ -302,4 +441,5 @@ def update_dashboard(selected_regions, selected_categories, selected_segment):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Keep debug mode off by default for a safer portfolio-ready run.
+    app.run(debug=False)
