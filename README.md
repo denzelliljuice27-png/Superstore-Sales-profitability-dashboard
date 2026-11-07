@@ -145,7 +145,7 @@ These are analysis-based recommendations, not guaranteed forecasts of future imp
 
 ## What I learned
 
-This assignment strengthened my ability to work through a complete data-analysis project, from loading raw data to communicating findings in an interactive dashboard. The main learning outcomes are documented in [Learning Outcomes](docs/LEARNING_OUTCOMES.md).
+This assignment strengthened my ability to work through a complete data-analysis project, from loading raw data to communicating findings in an interactive dashboard.
 
 I also learned that a dashboard is not only about making charts look attractive. It should help users answer specific business questions, explore the data and make more informed decisions.
 
@@ -155,7 +155,6 @@ One of the main technical challenges was a `FileNotFoundError` because the CSV f
 
 I also learned to choose visualisations based on the question being answered. For example, a grouped bar chart makes it easier to compare sales and profit across regions than a pie chart when the objective is to compare two measures.
 
-Read the full [Project Reflection](docs/PROJECT_REFLECTION.md).
 
 ## Limitations and future improvements
 
