@@ -1,0 +1,1 @@
+No software license has been selected for this repository. Before making the repository public, confirm that you have permission to redistribute the dataset. The dataset is attributed in README.md to its Kaggle source.
