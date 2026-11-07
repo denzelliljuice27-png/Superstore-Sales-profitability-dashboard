@@ -15,13 +15,13 @@ The dashboard includes interactive filters for region, category and customer seg
 ![Sales vs Profit scatter plot](screenshots/sales-vs-profit.png)
 
 ### Monthly Sales Trend
-![Monthly sales trend](screenshots/monthly-sales-trend.png)
+![Monthly sales trend](screenshots/monthly-sales.png)
 
 ### Regional Performance
-![Regional performance](screenshots/regional-performance.png)
+![Regional performance](screenshots/regional-performance-chart.png)
 
 ### Additional Analysis
-![Profit distribution, average profit by sub-category and correlation heatmap](screenshots/analysis-visualisations.png)
+![Profit distribution, average profit by sub-category and correlation heatmap](screenshots/profit-analysis.png)
 
 ## Project objectives
 
@@ -73,9 +73,9 @@ The CSV is stored in `data/Sample - Superstore.csv` so the analysis can be repro
 │   └── PROJECT_REFLECTION.md
 └── screenshots/
     ├── sales-vs-profit.png
-    ├── monthly-sales-trend.png
-    ├── regional-performance.png
-    └── analysis-visualisations.png
+    ├── monthly-sales.png
+    ├── regional-performance-chart.png
+    └── profit-analysis.png
 ```
 
 ## Run the dashboard locally
