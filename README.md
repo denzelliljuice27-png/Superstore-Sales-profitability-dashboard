@@ -2,8 +2,7 @@
 
 An end-to-end **Data Manipulation and Visualisation** project using the Sample Superstore retail dataset. The project explores sales, profit, discounts, product sub-categories, customer segments and regional performance, then presents the results in an interactive Python dashboard built with Dash and Plotly.
 
-> **Portfolio project:** BSc Information Technology · Data Manipulation and Visualisation 600 · 2026  
-> Student identifier has intentionally been left out of this public repository.
+> **Portfolio project:** BSc Information Technology · Data Manipulation and Visualisation 600
 
 ## Dashboard preview
 
@@ -54,27 +53,6 @@ The dataset is included in `data/Sample - Superstore.csv` for reproducibility. T
 - **Dash** — interactive web dashboard and callback-based updates.
 - **Dash Bootstrap Components** — dashboard layout and KPI cards.
 
-## Repository structure
-
-```text
-superstore-sales-profitability-dashboard/
-├── app.py
-├── requirements.txt
-├── README.md
-├── .gitignore
-├── data/
-│   └── Sample - Superstore.csv
-├── docs/
-│   ├── LEARNING_OUTCOMES.md
-│   └── PROJECT_REFLECTION.md
-└── screenshots/
-    ├── dashboard-overview.png
-    ├── sales-vs-profit.png
-    ├── monthly-sales-trend.png
-    ├── regional-performance.png
-    ├── analysis-visualisations.png
-    └── dashboard-filters-and-kpis.png
-```
 
 ## Run the dashboard locally
 
