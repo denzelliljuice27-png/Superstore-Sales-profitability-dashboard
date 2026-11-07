@@ -59,25 +59,6 @@ The CSV is stored in `data/Sample - Superstore.csv` so the analysis can be repro
 | Dash | Interactive web dashboard and callbacks |
 | Dash Bootstrap Components | Responsive layout and KPI cards |
 
-## Repository structure
-
-```text
-.
-├── app.py
-├── requirements.txt
-├── README.md
-├── .gitignore
-├── data/
-│   └── Sample - Superstore.csv
-├── docs/
-│   ├── LEARNING_OUTCOMES.md
-│   └── PROJECT_REFLECTION.md
-└── screenshots/
-    ├── sales-vs-profit.png
-    ├── monthly-sales.png
-    ├── regional-performance-chart.png
-    └── profit-analysis.png
-```
 
 ## Run the dashboard locally
 
