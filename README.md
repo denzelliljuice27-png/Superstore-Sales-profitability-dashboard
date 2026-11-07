@@ -1,22 +1,27 @@
 # Superstore Sales & Profitability Dashboard
 
-An end-to-end **Data Manipulation and Visualisation** project using the Sample Superstore retail dataset. The project explores sales, profit, discounts, product sub-categories, customer segments and regional performance, then presents the results in an interactive Python dashboard built with Dash and Plotly.
+An interactive retail analytics project built with **Python, Pandas, Plotly and Dash**. It explores the Sample Superstore dataset to understand sales, profit, discounts, product sub-categories, customer segments and regional performance.
 
-> **Portfolio project:** BSc Information Technology · Data Manipulation and Visualisation 600
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![Pandas](https://img.shields.io/badge/Data-Pandas-150458?logo=pandas)
+![Plotly](https://img.shields.io/badge/Visualisation-Plotly-3F4F75?logo=plotly)
+![Dash](https://img.shields.io/badge/App-Dash-119DFF?logo=plotly)
 
 ## Dashboard preview
 
-![Dashboard overview](screenshots/dashboard-overview.PNG)
+The dashboard includes interactive filters for region, category and customer segment, KPI cards, and interactive charts.
 
-### More dashboard views
+### Sales vs Profit
+![Sales vs Profit scatter plot](screenshots/sales-vs-profit.png)
 
-| Sales vs Profit | Monthly Sales Trend |
-|---|---|
-| ![Sales vs profit](screenshots/sales-vs-profit.PNG) | ![Monthly sales trend](screenshots/monthly-sales-trend.png) |
+### Monthly Sales Trend
+![Monthly sales trend](screenshots/monthly-sales-trend.png)
 
-| Regional Performance | Analysis visualisations |
-|---|---|
-| ![Regional performance](screenshots/regional-performance.png) | ![Analysis visualisations](screenshots/analysis-visualisations.png) |
+### Regional Performance
+![Regional performance](screenshots/regional-performance.png)
+
+### Additional Analysis
+![Profit distribution, average profit by sub-category and correlation heatmap](screenshots/analysis-visualisations.png)
 
 ## Project objectives
 
@@ -26,67 +31,90 @@ The assignment followed a practical data-analysis workflow:
 2. Explore the dataset's structure, columns and descriptive statistics.
 3. Check data quality, including missing values, duplicate records, data types and outliers.
 4. Perform exploratory data analysis (EDA) and investigate profitability.
-5. Build an interactive dashboard that allows users to filter and compare business performance.
+5. Build an interactive dashboard to filter and compare business performance.
 6. Communicate findings, limitations and recommendations.
 
 ## Business questions
 
-The analysis was guided by three questions:
-
 - Which product sub-categories generate the largest losses, and how do discount strategies differ between profitable and unprofitable sub-categories?
-- How does profitability vary across the East, West, Central and South regions, and what factors might explain the differences?
+- How does profitability vary across the East, West, Central and South regions?
 - How are discounts and profit margins related across Consumer, Corporate and Home Office segments?
 
 ## Dataset
 
 The project uses the **Sample Superstore** dataset, containing 9,994 order-line records and 21 columns. Fields include order and shipping dates, customer segment, region, category, sub-category, sales, quantity, discount and profit.
 
-The dataset is included in `data/Sample - Superstore.csv` for reproducibility. The original dataset source is listed in the assignment bibliography as the [Sample Superstore dataset on Kaggle](https://www.kaggle.com/datasets/vivek468/superstore-dataset-final).
+The CSV is stored in `data/Sample - Superstore.csv` so the analysis can be reproduced. Dataset source: [Sample Superstore dataset on Kaggle](https://www.kaggle.com/datasets/vivek468/superstore-dataset-final).
 
-## Technologies and libraries
+## Technologies
 
-- **Python** — main programming language.
-- **Pandas** — loading, cleaning, transforming, grouping and aggregating tabular data.
-- **NumPy** — numerical and statistical calculations.
-- **Matplotlib and Seaborn** — static charts, distributions, box plots and heatmaps.
-- **Plotly** — interactive scatter, line and bar charts.
-- **Dash** — interactive web dashboard and callback-based updates.
-- **Dash Bootstrap Components** — dashboard layout and KPI cards.
+| Technology | Purpose |
+|---|---|
+| Python | Main programming language |
+| Pandas | Loading, cleaning, transforming and aggregating data |
+| NumPy | Numerical calculations |
+| Matplotlib and Seaborn | Static charts, distributions and heatmaps |
+| Plotly | Interactive scatter, line and bar charts |
+| Dash | Interactive web dashboard and callbacks |
+| Dash Bootstrap Components | Responsive layout and KPI cards |
 
+## Repository structure
+
+```text
+.
+├── app.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+├── data/
+│   └── Sample - Superstore.csv
+├── docs/
+│   ├── LEARNING_OUTCOMES.md
+│   └── PROJECT_REFLECTION.md
+└── screenshots/
+    ├── sales-vs-profit.png
+    ├── monthly-sales-trend.png
+    ├── regional-performance.png
+    └── analysis-visualisations.png
+```
 
 ## Run the dashboard locally
 
+### 1. Clone the repository
 
-### Create and activate a virtual environment
-
-**Windows (PowerShell):**
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
+```bash
+git clone https://github.com/denzelliljuice27-png/Superstore-Sales-profitability-dashboard.git
+cd Superstore-Sales-profitability-dashboard
 ```
 
-**macOS / Linux:**
+### 2. Create and activate a virtual environment
 
+**Windows PowerShell**
+```powershell
+python -m venv .venv
+.venv\\Scripts\\Activate.ps1
+```
+
+**macOS / Linux**
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### Install dependencies
+### 3. Install dependencies
 
 ```bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### Start the dashboard
+### 4. Start the dashboard
 
 ```bash
 python app.py
 ```
 
-Open the local address printed in your terminal (normally `http://127.0.0.1:8050`) in your browser. Stop the server with `Ctrl + C`.
+Open the local address shown in the terminal (normally http://127.0.0.1:8050). Stop the server with `Ctrl + C`.
 
 ## Dashboard features
 
@@ -94,82 +122,83 @@ Open the local address printed in your terminal (normally `http://127.0.0.1:8050
 - **Category filter:** focus on Furniture, Office Supplies or Technology.
 - **Segment filter:** compare Consumer, Corporate or Home Office customers.
 - **KPI cards:** view total sales, total profit, average transaction-level profit margin and distinct order count for the selected filters.
-- **Sales vs Profit scatter plot:** inspect transaction-level relationships and identify loss-making orders. Bubble size represents quantity; hover details provide product and order context.
-- **Monthly Sales Trend:** explore changes over time and use the Plotly range slider to focus on a period.
+- **Sales vs Profit:** inspect transaction-level relationships and loss-making orders. Bubble size represents quantity.
+- **Monthly Sales Trend:** explore sales over time and use the Plotly range slider.
 - **Regional Performance:** compare sales and profit across regions.
-- **Static analysis charts:** inspect profit distribution, average profit by sub-category and correlations between numeric fields.
+- **Additional analysis:** inspect profit distribution, average profit by sub-category and correlations between numeric fields.
 
 ## Data preparation and analysis
 
-The analysis carried out in the assignment included:
+The assignment included:
 
-### Data quality checks
+- Checking missing values with `isnull().sum()` and missing-value percentages.
+- Checking fully duplicated rows with `duplicated()`.
+- Converting Order Date and Ship Date to datetime values.
+- Deriving shipping duration, profit margin and year-month fields.
+- Investigating outliers with box plots and the interquartile range (IQR).
+- Calculating descriptive statistics such as mean, median, standard deviation, percentiles, minimum and maximum.
+- Grouping data by category, region, segment and sub-category.
+- Exploring monthly sales trends and correlations between Sales, Quantity, Discount and Profit.
 
-- Used `isnull().sum()` and missing-value percentages to check for missing data. The assignment reported no missing values.
-- Used `duplicated()` to check for fully duplicated rows. The assignment reported zero true duplicate rows.
-- Converted `Order Date` and `Ship Date` into datetime values.
-- Derived shipping duration, profit margin, order year, order month and year-month fields.
-- Used the interquartile range (IQR) rule and box plots to investigate outliers.
-- Kept business-relevant outliers because unusually large orders, losses and discounts may represent genuine business activity rather than data errors.
-
-### Exploratory data analysis
-
-- Calculated mean, median, standard deviation, percentiles, minimum, maximum and range for sales and profit.
-- Grouped data by category, region, segment and sub-category.
-- Investigated monthly sales trends.
-- Used a correlation matrix to examine relationships among Sales, Quantity, Discount and Profit.
-- Isolated loss-making transactions and aggregated losses by sub-category.
+Business-relevant outliers were retained rather than removed automatically, because unusually large orders and losses can be important findings.
 
 ## Key findings
 
-The following figures are based on the included Sample Superstore CSV and the assignment's analysis:
-
 - The dataset contains **9,994 records**.
-- Mean sales per record are approximately **$229.86**, compared with a median of **$54.49**. The mean being higher than the median indicates a right-skewed sales distribution.
-- Mean profit per record is approximately **$28.66**, compared with a median of **$8.67**, also indicating a right-skewed distribution.
-- The correlation between **Discount and Profit is approximately -0.22**, a weak-to-moderate negative linear relationship. This indicates that higher discounts tend to be associated with lower profit in this dataset; correlation alone does not prove that discounts cause losses.
-- When summing only negative-profit transactions, **Binders have the largest accumulated losses (approximately -$38,510.50)**.
-- The dashboard makes it possible to inspect how results change when region, category and segment filters are adjusted.
+- Mean sales per record are approximately **$229.86**, compared with a median of **$54.49**.
+- Mean profit per record is approximately **$28.66**, compared with a median of **$8.67**.
+- The correlation between **Discount and Profit is approximately -0.22**. This indicates a negative linear relationship in this dataset; correlation alone does not prove causation.
+- In the assignment analysis, Binders had the largest accumulated losses among sub-categories (approximately **-$38,510.50**).
 
 ### Data-validation note
 
-The written assignment reported 1,565 loss-making transactions (15.66%). A fresh calculation on the CSV included in this repository identifies **1,871 records with negative profit** (approximately 18.72%). This difference is documented rather than silently choosing one figure. It is a useful reminder to rerun calculations against the exact dataset version used in a project before publishing final statistics.
+The written assignment reported 1,565 loss-making transactions (15.66%). A separate calculation on the CSV included in this repository identified 1,871 records with negative profit (approximately 18.72%). This difference is documented because results should always be checked against the exact dataset version and calculation used.
 
-## Recommendations explored in the assignment
+## Recommendations
 
-1. **Review discounting on loss-making products.** Evaluate discount limits for products and transactions that frequently produce negative profit.
-2. **Investigate regional performance.** Compare pricing, shipping and operating factors in regions with weaker profitability.
-3. **Prioritise stronger-performing categories.** Use profit and margin analysis, not sales volume alone, when making marketing and inventory decisions.
+1. Review discounting on products and transactions that frequently produce negative profit.
+2. Investigate pricing, shipping and operating factors that may contribute to regional differences.
+3. Evaluate product performance using profit and margin, not sales volume alone.
 
-These are analysis-based recommendations, not guaranteed forecasts of future improvements.
+These are analysis-based recommendations, not guaranteed forecasts.
 
 ## What I learned
 
-This assignment strengthened my ability to work through a complete data-analysis project, from loading raw data to communicating findings in an interactive dashboard.
+This project strengthened my skills in:
 
-I also learned that a dashboard is not only about making charts look attractive. It should help users answer specific business questions, explore the data and make more informed decisions.
+- Python programming and project organisation.
+- Data loading, cleaning and preparation with Pandas.
+- Descriptive statistics and exploratory data analysis.
+- Outlier detection and correlation interpretation.
+- Static and interactive data visualisation.
+- Building dashboards with Dash, Plotly and callbacks.
+- Debugging file paths and managing Python dependencies.
+- Communicating business findings and recommendations.
+
+More detail is available in:
+- [Learning Outcomes](docs/LEARNING_OUTCOMES.md)
+- [Project Reflection](docs/PROJECT_REFLECTION.md)
 
 ## Challenges and reflection
 
-One of the main technical challenges was a `FileNotFoundError` because the CSV file was not in the location expected by the application. I fixed this by checking the project structure, placing the dataset in the correct location and installing the missing Python packages. This taught me to pay attention to file paths, dependencies and reproducible project setup.
+One technical challenge was a `FileNotFoundError` caused by the dashboard not finding the CSV file at the expected path. I resolved it by checking the project structure, placing the dataset in the correct folder and confirming the file name. This reinforced the importance of reproducible file paths and dependency management.
 
-I also learned to choose visualisations based on the question being answered. For example, a grouped bar chart makes it easier to compare sales and profit across regions than a pie chart when the objective is to compare two measures.
-
+I also learned to choose charts based on the business question. For example, a grouped bar chart makes it easier to compare sales and profit across regions than a pie chart.
 
 ## Limitations and future improvements
 
-- The dataset does not provide every operational cost, so the analysis cannot fully explain all reasons for regional or product-level performance.
-- The dashboard analyses historical data; it does not currently forecast future sales or profit.
-- Customer-level purchasing behaviour and repeat-customer analysis could be expanded.
-- A future version could add predictive sales forecasting, customer retention analysis, downloadable filtered data and automated tests.
+- The dataset does not include every operational cost, so it cannot fully explain all reasons for regional or product-level performance.
+- The dashboard analyses historical data and does not currently forecast future sales or profit.
+- Customer-level purchasing patterns and repeat-customer analysis could be expanded.
+- Future versions could add sales forecasting, downloadable filtered data, automated tests and customer retention analysis.
 
 ## Academic context and acknowledgement
 
-This repository presents the practical work and learning from the Data Manipulation and Visualisation 600 assignment. The dataset is acknowledged in the assignment bibliography. The dashboard implementation uses the libraries listed above.
+This repository presents practical work and learning from the Data Manipulation and Visualisation 600 assignment. The dataset source is acknowledged above. The project uses the Python libraries listed in the Technologies section.
 
 ## Author
 
 **BSc Information Technology student**  
-GitHub: [https://github.com/denzelliljuice27-png](https://github.com/denzelliljuice27-png)
+GitHub: [@denzelliljuice27-png](https://github.com/denzelliljuice27-png)
 
-If you found this project useful, feel free to star the repository or connect with me on GitHub.
+If you find this project useful, feel free to star the repository.
