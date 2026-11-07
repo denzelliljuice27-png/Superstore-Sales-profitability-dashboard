@@ -8,6 +8,7 @@ An interactive retail analytics project built with **Python, Pandas, Plotly and 
 ![Dash](https://img.shields.io/badge/App-Dash-119DFF?logo=plotly)
 
 ## Dashboard preview
+![Dasboard](screenshots/dashboard-overview.PNG)
 
 The dashboard includes interactive filters for region, category and customer segment, KPI cards, and interactive charts.
 
