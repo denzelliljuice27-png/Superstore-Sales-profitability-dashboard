@@ -12,7 +12,7 @@ An end-to-end **Data Manipulation and Visualisation** project using the Sample S
 
 | Sales vs Profit | Monthly Sales Trend |
 |---|---|
-| ![Sales vs profit](screenshots/sales-vs-profit.png) | ![Monthly sales trend](screenshots/monthly-sales-trend.png) |
+| ![Sales vs profit](screenshots/sales-vs-profit.PNG) | ![Monthly sales trend](screenshots/monthly-sales-trend.png) |
 
 | Regional Performance | Analysis visualisations |
 |---|---|
